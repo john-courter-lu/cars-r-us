@@ -110,15 +110,17 @@ export const getInteriors = () => {
     return database.interiors.map(obj => ({ ...obj }));
 }
 
-export const getTechnologies = () => {
-    return database.technologies.map(obj => ({ ...obj }));
-}
+export const getTechnologies = async () => {
+    const res = await fetch("https://localhost:7153/technologies");
+    const data = await res.json();
+    return data;
+  };
 
 export const getWheels = () => {
     return database.wheels.map(obj => ({ ...obj }));
 }
 
-export const getOrders = () => {
+export const getOrders =  () => {
     return database.orders.map(obj => ({ ...obj }));
 }
 

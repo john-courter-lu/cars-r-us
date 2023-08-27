@@ -4,7 +4,7 @@ import { getPaints, getInteriors, getTechnologies, getWheels, getOrders } from "
 
 const paints = getPaints();
 const interiors = getInteriors();
-const technologies = getTechnologies();
+const technologies = await getTechnologies();
 const wheels = getWheels();
 
 
@@ -14,7 +14,13 @@ export const renderSectionHTML = (sectionIdString, sectionArray) => {
 
     let html = `<select id='${sectionIdString}'> <option value='0'> Please choose an option </option>`
 
-    const optionInSelect = sectionArray.map(obj => `<option value='${obj.id}'> ${obj.option} </option>`)
+    //for intergation of API data with different names representing option
+    let option = "option";
+    switch (sectionArray) {
+        case (technologies): { option = "package" }
+    }
+
+    const optionInSelect = sectionArray.map(obj => `<option value='${obj.id}'> ${obj[option]} </option>`)
     html += optionInSelect.join('')
     html += `</select>`
 
