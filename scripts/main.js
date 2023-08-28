@@ -43,3 +43,20 @@ document.addEventListener('stateChanged',()=>{
     renderMainContainerHTML()
 })
 
+// 增加标识完成的feature  第2步: 监听complete button
+
+document.addEventListener("click", (event) => {
+    const { name, id } = event.target;
+    if (name === "complete") {
+      completeOrder(id);
+    }
+  });
+
+// 增加标识完成的feature  第3步: 设置completeOrder function
+
+export const completeOrder = async (orderId) => {
+    await fetch(`https://localhost:7153/orders/${orderId}/fulfill`, {
+      method: "POST",
+    });
+    document.dispatchEvent(new CustomEvent("stateChanged"));
+  };

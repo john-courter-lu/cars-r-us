@@ -76,10 +76,11 @@ export const mapDetailFunction = (order) => {
     and the ${order.technology.package}.
 
     Price: ${order.totalCost.toLocaleString('en-US',{style:"currency",currency:'USD'})}
-    </li>`
+    </li><input type="button" name="complete" id="${order.id}" value="Complete">`
 
 }
 // 注意, 这里的order.wheels是遵循API中的定义. 所有的这些直接引用如order.paint都是因为API中的.FirstOrDefault, 所以要遵循API中的命名和Order.cs的collection中的命名
+// 增加标识完成的feature  第一步: 加入button
 
 //2-2
 
