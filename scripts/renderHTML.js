@@ -34,12 +34,24 @@ export const renderSectionHTML = (sectionIdString, sectionArray) => {
 //2-1 //同时也是最后一部分：用find找各个section的价格，add总价
 export const mapDetailFunction = (order) => {
 
+    const paint = paints.find((p) => p.id === order.paintId);
+    const technology = technologies.find((t) => t.id === order.technologyId);
+    const interior = interiors.find((i) => i.id === order.interiorId);
+    const wheel = wheels.find((w) => w.id === order.wheelId);
+
     return `<li>Order ${order.id} was placed on ${new Date(order.timestamp).toLocaleDateString()}.
+
+    Details:
+    ${paint.color} car with
+    ${wheel.style} wheels,
+    ${interior.material} interior,
+    and the ${technology.package}.
+    
     Price: ${(
-        paints.find(obj => obj.id === order.paintId).price + 
-        interiors.find(obj => obj.id === order.interiorId).price +
-        technologies.find(obj => obj.id === order.technologyId).price +
-        wheels.find(obj => obj.id === order.wheelId).price
+                  paint.price +
+                  technology.price +
+                  interior.price +
+                  wheel.price
     ).toLocaleString('en-US',{style:"currency",currency:'USD'})
         }
     </li>`
@@ -60,7 +72,17 @@ export const renderOrderHTML = async () => {
 
     return html
 }
+/*
+这个其实啰嗦了, 两个地方, 一是mapDetailFunction不需要, 可以直接  在const orders 之后
 
+return `${orders
+    .map((order) => {
+        先定义必须的variables
+        然后 return 全部html
+     }
+}`
+        
+*/
 
 
 
