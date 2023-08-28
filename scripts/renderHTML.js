@@ -75,13 +75,7 @@ export const mapDetailFunction = (order) => {
     ${order.interior.material} interior,
     and the ${order.technology.package}.
 
-    Price: ${(
-        order.paint.price +
-        order.technology.price +
-        order.interior.price +
-        order.wheels.price
-    ).toLocaleString('en-US',{style:"currency",currency:'USD'})
-        }
+    Price: ${order.totalCost.toLocaleString('en-US',{style:"currency",currency:'USD'})}
     </li>`
 
 }
