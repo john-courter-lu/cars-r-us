@@ -102,12 +102,16 @@ const database =
 }
 
 
-export const getPaints = () => {
-    return database.paints.map(obj => ({ ...obj }))
+export const getPaints = async () => {
+    const res = await fetch("https://localhost:7153/paintcolors");
+    const data = await res.json();
+    return data;
 }
 
-export const getInteriors = () => {
-    return database.interiors.map(obj => ({ ...obj }));
+export const getInteriors = async () => {
+    const res = await fetch("https://localhost:7153/interiors");
+    const data = await res.json();
+    return data;
 }
 
 export const getTechnologies = async () => {
@@ -116,12 +120,16 @@ export const getTechnologies = async () => {
     return data;
   };
 
-export const getWheels = () => {
-    return database.wheels.map(obj => ({ ...obj }));
+export const getWheels = async () => {
+    const res = await fetch("https://localhost:7153/wheels");
+    const data = await res.json();
+    return data;
 }
 
-export const getOrders =  () => {
-    return database.orders.map(obj => ({ ...obj }));
+export const getOrders = async () => {
+    const res = await fetch("https://localhost:7153/orders");
+    const data = await res.json();
+    return data;
 }
 
 //setter functions: storing userChoice 

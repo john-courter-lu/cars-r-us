@@ -2,10 +2,10 @@
 
 import { getPaints, getInteriors, getTechnologies, getWheels, getOrders } from "./database.js";
 
-const paints = getPaints();
-const interiors = getInteriors();
+const paints = await getPaints();
+const interiors = await getInteriors();
 const technologies = await getTechnologies();
-const wheels = getWheels();
+const wheels = await getWheels();
 
 
 
@@ -17,7 +17,10 @@ export const renderSectionHTML = (sectionIdString, sectionArray) => {
     //for intergation of API data with different names representing option
     let option = "option";
     switch (sectionArray) {
-        case (technologies): { option = "package" }
+        case (paints): { option = "color"; break }
+        case (interiors): { option = "material"; break}
+        case (technologies): { option = "package"; break }
+        case (wheels): { option = "style"; break }
     }
 
     const optionInSelect = sectionArray.map(obj => `<option value='${obj.id}'> ${obj[option]} </option>`)
@@ -44,9 +47,9 @@ export const mapDetailFunction = (order) => {
 }
 
 //2-2
-export const renderOrderHTML = () => {
+const orders = await getOrders();
 
-    const orders = getOrders();
+export const renderOrderHTML = () => {
 
     let html = '<ul class="orderDisplayDetail">'
     const listIn = orders.map(mapDetailFunction)
