@@ -25,7 +25,7 @@ document.addEventListener('change', event => {
         setTechnologies(Number(event.target.value));
     } else if (event.target.id === 'wheel') {
         setWheels(Number(event.target.value));
-        window.alert(`you made your choice, ready to submit?`)
+        window.alert(`You've made your choice, time to click the submit button to submit your order!`)
     }
   //💡🙄试试检查if userChoice有4个properties，then window.alert('All options are chosen. Time to submit your order.')
 })

@@ -120,6 +120,14 @@ export const getTechnologies = async () => {
     return data;
   };
 
+  /*  before the intergration with ASP.NET backend:
+
+    export const getTechnologies = () => {
+    return [...database.technologies]
+    } 
+    
+    */
+
 export const getWheels = async () => {
     const res = await fetch("https://localhost:7153/wheels");
     const data = await res.json();
@@ -152,6 +160,8 @@ export const setWheels = (id) => {
 // 还需要用 change event listener 来监控用户改变选择框做出选择时 invoke setter functions
 
 // savingUserChoiceToOrders
+/* before the intergration with ASP.NET backend:
+
 export const savingUserChoiceToOrders = () => {
     const newOrder = { ...database.userChoice } //这里直接用了spread syntax，没用map method
         newOrder.id = database.orders[database.orders.length - 1].id + 1
@@ -161,4 +171,25 @@ export const savingUserChoiceToOrders = () => {
     database.userChoice = {}
 
     document.dispatchEvent(new CustomEvent('stateChanged'))
+} 
+
+*/
+
+export const savingUserChoiceToOrders = async () => {
+    const newOrder = { ...database.userChoice } //这里直接用了spread syntax，没用map method
+
+    await fetch(`https://localhost:7153/orders`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newOrder),
+    });
+    //上面使用POST fetch来替代vanilla js的三行代码
+
+    database.userChoice = {}
+
+    document.dispatchEvent(new CustomEvent('stateChanged'))
 }
+
+// 下一步: 还是需要刷新页面才能看到最新的order. 那我要用 很多 async和await 来保证一submit就显示最新order, 不需要刷新页面. 
