@@ -31,7 +31,10 @@ export const renderSectionHTML = (sectionIdString, sectionArray) => {
 }
 
 //第2部分：renderOrderHTML
-//2-1 //同时也是最后一部分：用find找各个section的价格，add总价
+//2-1 //同时也是最后一部分：用find找各个section的价格，add总价 
+
+/* 这是API without composition 时要用的
+
 export const mapDetailFunction = (order) => {
 
     const paint = paints.find((p) => p.id === order.paintId);
@@ -56,7 +59,33 @@ export const mapDetailFunction = (order) => {
         }
     </li>`
 
+} 
+
+*/
+
+// 下面是API mapGET 加入了 composition, 也就是根据paintId 直接显示 paint , (用 .FirstOrDefault 在endpoint的lamda function中已经找好了 )
+
+export const mapDetailFunction = (order) => {
+
+    return `<li>Order ${order.id} was placed on ${new Date(order.timestamp).toLocaleDateString()}.
+
+    Details:
+    ${order.paint.color} car with
+    ${order.wheels.style} wheels,
+    ${order.interior.material} interior,
+    and the ${order.technology.package}.
+
+    Price: ${(
+        order.paint.price +
+        order.technology.price +
+        order.interior.price +
+        order.wheels.price
+    ).toLocaleString('en-US',{style:"currency",currency:'USD'})
+        }
+    </li>`
+
 }
+// 注意, 这里的order.wheels是遵循API中的定义. 所有的这些直接引用如order.paint都是因为API中的.FirstOrDefault, 所以要遵循API中的命名和Order.cs的collection中的命名
 
 //2-2
 
