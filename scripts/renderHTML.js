@@ -47,9 +47,11 @@ export const mapDetailFunction = (order) => {
 }
 
 //2-2
-const orders = await getOrders();
 
-export const renderOrderHTML = () => {
+export const renderOrderHTML = async () => {
+    const orders = await getOrders();
+    //we have to get the orders inside the Orders function, otherwise the orders won't refresh when we re-render them
+    //若要保证re-render的时候, 能pull最新的order data, 必须要把 这个orders 定义在这个function中, 这样 re-render 会invoke/call 这个function, 于是会pull 最新data
 
     let html = '<ul class="orderDisplayDetail">'
     const listIn = orders.map(mapDetailFunction)
@@ -63,7 +65,7 @@ export const renderOrderHTML = () => {
 
 
 //第3部分：renderMainContainerHTML
-export const renderMainContainerHTML = () => {
+export const renderMainContainerHTML = async () => {
     let html = `
 <article class='optionContainer'>
 
@@ -95,11 +97,14 @@ export const renderMainContainerHTML = () => {
 <article class='orderDisplayContainer'>
     
     <h2>Orders</h2>
-    ${renderOrderHTML()}
+    ${await renderOrderHTML()}
     
 </article>
     `
 
     document.getElementById('Container').innerHTML = html
-    //👨‍💼上面的段落实际上只是“生成”html，这一步才是“render”html
+    //👨‍💼上面的段落实际上只是“生成”/"generate" html，这一步才是“render”html
 }
+
+//the async/await syntax requires any functions that call an async function to also be async
+//所有call 异步函数的函数 都必须也是 异步函数
